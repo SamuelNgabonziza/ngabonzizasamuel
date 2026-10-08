@@ -1,0 +1,47 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /posts/{postId} {
+      function isAdmin() {
+        return request.auth != null && request.auth.uid == 'H4BHAMvfImcwDgWJF9FaXt6bPdC2';
+      }
+      function postIsPublic() {
+        return get(/databases/$(database)/documents/posts/$(postId)).data.published == true;
+      }
+      function isVisitor() {
+        return request.auth != null;
+      }
+      allow read: if resource.data.published == true
+        || isAdmin();
+      allow create, update: if isAdmin()
+        && request.resource.data.type in ['project', 'photo', 'video', 'article'];
+      allow delete: if isAdmin();
+
+      match /likes/{visitorUid} {
+        function likesEnabled() {
+          return postIsPublic()
+            && get(/databases/$(database)/documents/posts/$(postId)).data.allowLikes == true;
+        }
+        allow read: if likesEnabled() || isAdmin();
+        allow create: if likesEnabled() && isVisitor() && request.auth.uid == visitorUid;
+        allow delete: if isAdmin() || (likesEnabled() && isVisitor() && request.auth.uid == visitorUid);
+      }
+
+      match /comments/{commentId} {
+        function commentsEnabled() {
+          return postIsPublic()
+            && get(/databases/$(database)/documents/posts/$(postId)).data.allowComments == true;
+        }
+        allow read: if commentsEnabled() || isAdmin();
+        allow create: if commentsEnabled() && isVisitor()
+          && request.resource.data.keys().hasOnly(['uid', 'text', 'createdAt'])
+          && request.resource.data.uid == request.auth.uid
+          && request.resource.data.text is string
+          && request.resource.data.text.size() > 0
+          && request.resource.data.text.size() <= 1000
+          && request.resource.data.createdAt == request.time;
+        allow delete: if isAdmin() || (isVisitor() && resource.data.uid == request.auth.uid);
+      }
+    }
+  }
+}

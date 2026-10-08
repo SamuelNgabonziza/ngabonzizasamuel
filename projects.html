@@ -3,9 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Projects by Samuel Ngabonziza — Super_Attendance_Maker (Android), IoT Coffee Dryer Monitoring System, and more.">
 <title>Projects — FlowShield</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head>
@@ -15,7 +17,9 @@
     <div class="brand">FlowShield</div>
     <div class="nav-links">
       <a href="index.html">Home</a>
+      <a href="about.html">About</a>
       <a href="projects.html" class="active">Projects</a>
+      <a href="services.html">Services</a>
       <a href="roadmap.html">Roadmap</a>
       <a href="contact.html" class="nav-cta">Contact</a>
     </div>
@@ -27,32 +31,25 @@
   </header>
 
   <section>
-    <div class="card">
-      <div class="dot"></div>
-      <div>
-        <h3>Super_Attendance_Maker <span>Android</span></h3>
-        <p>An attendance-tracking app for institutions, replacing manual sign-in sheets with a faster, harder-to-falsify digital system.</p>
-        <a href="https://github.com/SamuelNgabonziza" target="_blank" rel="noopener">View on GitHub →</a>
-      </div>
-    </div>
-    <div class="card b">
-      <div class="dot"></div>
-      <div>
-        <h3>IoT Coffee Dryer Monitor <span>IoT</span></h3>
-        <p>A sensor-based monitoring system giving smallholder coffee processors real-time visibility during drying.</p>
-        <a href="https://github.com/SamuelNgabonziza/IoTCoffee_DryerMonitoniring_system" target="_blank" rel="noopener">View on GitHub →</a>
-      </div>
-    </div>
+    <div id="project-list"></div>
   </section>
 
   <footer>
-    <p>Open to collaboration, feedback, and conversations about what FlowShield becomes.</p>
-    <div class="foot-links">
-      <a href="mailto:ngabonzizasamuelprosper@gmail.com">Email</a>
-      <a href="https://github.com/SamuelNgabonziza" target="_blank" rel="noopener">GitHub</a>
-      <a href="https://www.linkedin.com/in/ngabonziza-samuel-7755a937b" target="_blank" rel="noopener">LinkedIn</a>
+    <div class="row">
+      <div>
+        <h2>Get in touch</h2>
+        <p>Open to collaboration, feedback, and conversations about what FlowShield becomes.</p>
+      </div>
+      <div class="contact-links">
+        <a href="mailto:ngabonzizasamuelprosper@gmail.com">Email</a>
+        <a href="https://github.com/SamuelNgabonziza" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/ngabonziza-samuel-7755a937b" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
     </div>
   </footer>
+  <script src="js/script.js"></script>
+<script>renderProjects();</script>
+<script type="module" src="js/project-feed.js"></script>
 </div>
 </body>
 </html>
