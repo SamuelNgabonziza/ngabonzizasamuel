@@ -84,14 +84,6 @@ h2.sec{font-family:'Fraunces',serif; font-size:24px; font-weight:600; margin-bot
 .service h3{font-size:18px; font-weight:600; margin-bottom:6px}
 .service p{color:var(--text-dim); font-size:15px; max-width:60ch}
 
-/* Roadmap */
-.roadmap{display:flex; flex-direction:column; gap:2px}
-.rstep{display:flex; gap:16px; align-items:baseline; padding:16px 0; border-top:1px solid var(--line)}
-.rstep:first-child{border-top:none}
-.rstep .n{font-family:'IBM Plex Mono',monospace; color:var(--violet); font-size:13px}
-.rstep .tag{font-size:11px; font-family:'IBM Plex Mono',monospace; padding:2px 8px; border-radius:4px; border:1px solid var(--line); color:var(--text-dim); margin-left:auto}
-.rstep .tag.now{color:var(--teal); border-color:var(--teal)}
-
 /* Footer */
 footer{padding:50px 0 70px; text-align:center}
 footer p{color:var(--text-dim); font-size:14px}
@@ -230,3 +222,69 @@ body:not(.home-page) footer p,body:not(.home-page) .foot-mark{font-size:15px;col
 .comment-feedback,.no-comments{color:#746d7e;font-size:12px;margin-top:8px}
 .comment-submit{align-self:end}
 @media(max-width:760px){.studio-wrap{padding:18px 18px 55px}.studio-intro{padding-top:54px}.studio-layout,.public-post-grid{grid-template-columns:1fr}.studio-form-panel,.studio-posts-panel{padding:22px}.studio-notice{flex-direction:column;gap:5px}.studio-posts-heading{align-items:flex-start}}
+
+.studio-wrap{position:relative}
+.studio-theme-floating{position:absolute;top:26px;right:30px;border:1px solid #dcd5e3;border-radius:999px;background:#fff;color:#342c3e;padding:9px 14px;font:600 12px 'DM Sans',sans-serif;cursor:pointer}
+.studio-theme-floating:focus-visible{outline:2px solid #6442cc;outline-offset:3px}
+.studio-header{padding-right:158px}
+.cloud-project{display:flex;gap:18px;align-self:stretch;overflow:hidden;border:1px solid #e5e0e9;border-radius:24px;background:#fff;padding:24px}
+.cloud-project .bar{flex:0 0 3px;border-radius:99px;background:#6442cc}
+.cloud-project .content{min-width:0}
+.cloud-project .content h3{font:600 26px/1.1 'Cormorant Garamond',Georgia,serif}
+.cloud-project .content p{margin:14px 0;color:#655f70;font-size:15px;line-height:1.7}
+.cloud-project-image{width:100%;max-height:220px;object-fit:cover;border-radius:15px}
+
+html.dark .studio-page{background:#111018;color:#f7f4fb}
+html.dark .studio-page a{color:#c5adff}
+html.dark .studio-header>a:last-child{color:#c5adff}
+html.dark .studio-intro h1,html.dark .studio-sign-in h2,html.dark .studio-form-panel h2,html.dark .studio-posts-panel h2{color:#f7f4fb}
+html.dark .studio-intro>p:last-child,html.dark .studio-page label,html.dark .studio-page label span{color:#beb7c9}
+html.dark .studio-notice{border-color:#3b3548;background:#2d2739;color:#e4dcec}
+html.dark .studio-notice strong{color:#d1bdff}
+html.dark .studio-sign-in,html.dark .studio-form-panel,html.dark .studio-posts-panel{border-color:#3b3548;background:#1b1823;box-shadow:0 12px 34px #0004}
+html.dark .studio-page input,html.dark .studio-page select,html.dark .studio-page textarea{border-color:#494153;background:#111018;color:#f7f4fb}
+html.dark .studio-page input::placeholder,html.dark .studio-page textarea::placeholder{color:#a39aac}
+html.dark .studio-page input:focus,html.dark .studio-page select:focus,html.dark .studio-page textarea:focus{outline-color:#b49aff}
+html.dark .studio-export,html.dark .edit-post{background:#2d2739;color:#e4d8ff}
+html.dark .studio-theme-floating{border-color:#494153;background:#1b1823;color:#f7f4fb}
+html.dark .admin-post-row{border-color:#3b3548}
+html.dark .admin-post-row h3,html.dark .post-permissions legend{color:#f7f4fb}
+html.dark .admin-post-row p,html.dark .form-status,html.dark .empty-posts,html.dark .comment-feedback,html.dark .no-comments{color:#beb7c9}
+html.dark .post-badge{background:#352b4d;color:#d1bdff}
+html.dark .post-badge-hidden{background:#34313a;color:#c2bbc8}
+html.dark .delete-post{background:#482a36;color:#ffc0ca}
+html.dark .post-permissions,html.dark .comment-item{border-color:#3b3548;background:#1b1823}
+html.dark .post-permissions legend,html.dark .comment-item p{color:#f7f4fb}
+html.dark .public-post-card{border-color:#3b3548;background:#1b1823}
+html.dark .public-post-card>img{background:#2d2739}
+html.dark .public-post-body h2{color:#f7f4fb}
+html.dark .public-post-body p{color:#d0c9d8}
+html.dark .public-post-body small,html.dark .comment-item small{color:#beb7c9}
+html.dark .interaction-button{border-color:#494153;background:#24202d;color:#e7dafa}
+html.dark .interaction-button:hover,html.dark .interaction-button[aria-pressed="true"]{border-color:#745eb0;background:#352b4d;color:#ddcfff}
+html.dark .comment-panel{background:#111018}
+html.dark .comment-form textarea{border-color:#494153;background:#1b1823;color:#f7f4fb}
+html.dark .cloud-project{border-color:#3b3548;background:#1b1823}
+html.dark .cloud-project .content p{color:#beb7c9}
+@media(max-width:760px){.studio-theme-floating{top:19px;right:18px}.studio-header{padding-right:145px}}
+
+/* Interactive 3D Earth and orbit system in the home hero */
+.home-page .hero-art{
+  height:540px;overflow:visible;isolation:isolate;
+  border:0;border-radius:0;background:transparent;box-shadow:none;
+}
+.home-page .earth-fallback{
+  position:absolute;z-index:0;width:min(43%,250px);aspect-ratio:1;left:50%;top:50%;
+  object-fit:cover;border-radius:50%;transform:translate(-50%,-50%) rotate(-12deg);
+  filter:drop-shadow(0 12px 24px #28354340);
+  transition:opacity .6s ease;
+}
+.home-page #earth-scene{
+  position:absolute;z-index:1;inset:0;width:100%;height:100%;display:block;
+  opacity:0;transition:opacity .8s ease;
+}
+.home-page .hero-art.earth-ready #earth-scene{opacity:1}
+.home-page .hero-art.earth-ready .earth-fallback{opacity:0}
+@media(max-width:760px){.home-page .hero-art{height:420px}}
+@media(max-width:420px){.home-page .hero-art{height:340px}}
+@media(prefers-reduced-motion:reduce){.home-page .art-glow{animation:none}}

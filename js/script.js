@@ -4,7 +4,7 @@
   Copy one of the objects below inside the `projects` array and edit it.
   "accent" can be "amber" or "teal" — it just alternates the color of the side bar.
 */
-const projects = [
+export const projects = [
   {
     title: "Super_Attendance_Maker",
     tag: "Android",
@@ -28,7 +28,7 @@ const projects = [
   -------------------------
   Add an object with a title and description. Keep descriptions to one sentence.
 */
-const services = [
+export const services = [
   {
     title: "Android app development",
     description: "Building attendance, tracking, and utility apps for small businesses and institutions."
@@ -43,30 +43,4 @@ const services = [
   }
 ];
 
-function renderProjects() {
-  const container = document.getElementById("project-list");
-  container.innerHTML = projects.map(p => `
-    <div class="project ${p.accent === "teal" ? "secondary" : ""}">
-      <div class="bar"></div>
-      <div class="content">
-        <h3>${p.title} <span class="tag">${p.tag}</span></h3>
-        <p>${p.description}</p>
-        <div class="stack">${p.stack.map(s => `<span>${s}</span>`).join("")}</div>
-        <a class="link" href="${p.link}" target="_blank" rel="noopener">View on GitHub →</a>
-      </div>
-    </div>
-  `).join("");
-}
-
-function renderServices() {
-  const container = document.getElementById("service-list");
-  container.innerHTML = services.map(s => `
-    <div class="service">
-      <h3>${s.title}</h3>
-      <p>${s.description}</p>
-    </div>
-  `).join("");
-}
-
-// Each page calls the render function(s) it needs after loading this script.
 
