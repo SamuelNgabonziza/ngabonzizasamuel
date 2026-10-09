@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import {
   ArrowRight, ArrowUpRight, Camera, Globe,
-  Menu, Moon, Music2, Sparkles, Sun, X
+  Menu, Music2, Sparkles, X
 } from 'lucide-react';
 import { projects, services } from '../js/script.js';
 import './app.css';
@@ -13,31 +13,35 @@ const navItems = [
   ['Notes & photos', 'posts.html', 'posts'], ['Contact', 'contact.html', 'contact']
 ];
 
-function useTheme() {
-  const [dark, setDark] = useState(() => document.documentElement.classList.contains('dark'));
+function useSystemTheme() {
   useEffect(() => {
-    document.documentElement.classList.toggle('dark', dark);
-    try { localStorage.setItem('flowshield-theme-v2', dark ? 'dark' : 'light'); } catch { /* private browsing */ }
-  }, [dark]);
-  return [dark, () => setDark(value => !value)];
+    const preference = window.matchMedia('(prefers-color-scheme: dark)');
+    const applyPreference = event => {
+      const dark = event.matches;
+      document.documentElement.classList.toggle('dark', dark);
+      document.querySelector('meta[name="theme-color"]')?.setAttribute('content', dark ? '#111018' : '#f7f6fb');
+    };
+    applyPreference(preference);
+    preference.addEventListener('change', applyPreference);
+    return () => preference.removeEventListener('change', applyPreference);
+  }, []);
 }
 
-function Header({ page, dark, toggleTheme }) {
+function Header({ page }) {
   const [menuOpen, setMenuOpen] = useState(false);
   return <header className="site-header sticky top-0 z-40 border-b border-white/10 bg-[#11131b]/90 text-white backdrop-blur-xl">
     <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-3 sm:px-8">
-      <a href="index.html" className="brand group inline-flex shrink-0 items-center gap-2.5 rounded-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-300" aria-label="FlowShield home">
+      <a href="index.html" className="brand group inline-flex shrink-0 items-center gap-3 rounded-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-300" aria-label="FlowShield home">
         <span className="brand-orbit" aria-hidden="true"><i /><i /><i /></span>
-        <span className="font-display text-xl font-semibold tracking-tight">FlowShield<span className="text-[#ff856e]">.</span></span>
+        <span className="font-display text-2xl font-semibold tracking-tight sm:text-[1.8rem]">FlowShield<span className="text-[#ff856e]">.</span></span>
       </a>
       <button className="grid size-9 place-items-center rounded-full border border-white/15 text-white transition hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300 lg:hidden" type="button" aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'} aria-expanded={menuOpen} aria-controls="primary-navigation" onClick={() => setMenuOpen(value => !value)}>{menuOpen ? <X size={18} /> : <Menu size={18} />}</button>
-      <nav id="primary-navigation" aria-label="Main navigation" className={`${menuOpen ? 'flex' : 'hidden'} absolute left-0 right-0 top-full flex-col gap-1 border-b border-white/10 bg-[#11131b]/[.98] p-4 shadow-2xl lg:static lg:flex lg:flex-row lg:items-center lg:gap-5 lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none`}>
-        <div className="flex flex-col gap-1 lg:flex-row lg:items-center lg:gap-5">
+      <nav id="primary-navigation" aria-label="Main navigation" className={`${menuOpen ? 'flex' : 'hidden'} absolute left-3 right-3 top-[calc(100%+0.5rem)] max-h-[calc(100svh-5rem)] flex-col gap-2 overflow-y-auto rounded-2xl border border-black/10 bg-white/[.97] p-3 text-[#211d2b] shadow-2xl dark:border-white/15 dark:bg-[#11131b]/[.98] dark:text-white lg:static lg:flex lg:max-h-none lg:flex-row lg:items-center lg:gap-5 lg:overflow-visible lg:rounded-none lg:border-0 lg:bg-transparent lg:p-0 lg:text-inherit lg:shadow-none`}>
+        <div className="grid grid-cols-2 gap-2 lg:flex lg:items-center lg:gap-5">
           {navItems.map(([label, href, key]) => <a key={key} href={href} aria-current={page === key ? 'page' : undefined} className={`inline-flex min-h-10 items-center rounded-md px-2 text-[13px] font-medium transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300 lg:min-h-8 lg:px-0 ${page === key ? 'text-white' : 'text-white/65 hover:text-white'}`}><span className={page === key ? 'border-b border-[#ff856e] pb-1' : ''}>{label}</span></a>)}
         </div>
-        <div className="mt-2 flex items-center gap-3 border-t border-white/10 pt-3 lg:ml-1 lg:mt-0 lg:border-0 lg:pt-0">
-          <button type="button" onClick={toggleTheme} className="grid size-9 shrink-0 place-items-center rounded-full border border-white/15 text-white/80 transition hover:bg-white/10 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300" aria-label={`Switch to ${dark ? 'light' : 'dark'} theme`} title={`Switch to ${dark ? 'light' : 'dark'} theme`}>{dark ? <Sun size={15} /> : <Moon size={15} />}</button>
-          <a href="auth.html?mode=login" className="px-2 py-2 text-[13px] font-medium text-white/80 transition hover:text-white">Log in</a>
+        <div className="mt-1 flex items-center justify-end gap-2 border-t border-black/10 pt-3 dark:border-white/10 lg:ml-1 lg:mt-0 lg:gap-3 lg:border-0 lg:pt-0">
+          <a href="auth.html?mode=login" className="inline-flex min-h-11 items-center justify-center rounded-full border border-light-primary/30 bg-light-secondary/85 px-5 py-2 text-sm font-semibold text-light-primary transition hover:bg-light-secondary dark:border-dark-primary/35 dark:bg-dark-secondary/80 dark:text-dark-primary dark:hover:bg-dark-secondary lg:min-h-10 lg:px-4 lg:text-[13px]">Log in</a>
           <a href="auth.html?mode=signup" className="inline-flex min-h-9 items-center rounded-full border border-white/20 bg-white px-4 py-2 text-[12px] font-bold text-[#171923] transition hover:bg-cyan-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300">Sign up</a>
         </div>
       </nav>
@@ -64,8 +68,8 @@ function Footer() {
   </footer>;
 }
 
-function Frame({ page, children, dark, toggleTheme }) {
-  return <><a href="#main-content" className="skip-link">Skip to content</a><Header page={page} dark={dark} toggleTheme={toggleTheme} /><main id="main-content">{children}</main><Footer /></>;
+function Frame({ page, children }) {
+  return <><a href="#main-content" className="skip-link">Skip to content</a><Header page={page} /><main id="main-content">{children}</main><Footer /></>;
 }
 
 function SectionEyebrow({ children }) { return <p className="mb-4 text-xs font-bold uppercase tracking-[.19em] text-light-primary dark:text-dark-primary">{children}</p>; }
@@ -179,9 +183,9 @@ const pageMap = { home: HomePage, about: AboutPage, projects: ProjectsPage, serv
 function App() {
   const page = document.body.dataset.page || 'home';
   const Page = pageMap[page] || HomePage;
-  const [dark, toggleTheme] = useTheme();
+  useSystemTheme();
   useEffect(() => { document.title = `${page === 'home' ? 'Ideas into impact' : page[0].toUpperCase() + page.slice(1)} - FlowShield`; }, [page]);
-  return <Frame page={page} dark={dark} toggleTheme={toggleTheme}><Page /></Frame>;
+  return <Frame page={page}><Page /></Frame>;
 }
 
 createRoot(document.getElementById('root')).render(<App />);

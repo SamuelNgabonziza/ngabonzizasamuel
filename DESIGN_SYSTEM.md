@@ -22,7 +22,7 @@ An editorial maker portfolio: expressive Cormorant Garamond headlines, calm DM S
 | Mint | `#047857` | `#6EE7B7` | Secondary badges and focus chips |
 | Sky | `#2563EB` | `#93C5FD` | Secondary badges and focus chips |
 
-The exact colors are in `tailwind.config.js`; the page uses Tailwind's `dark:` variants and a persistent theme toggle. Coral is a highlight color; keep small text on the background or surface token for readable contrast.
+The exact colors are in `tailwind.config.js`; the page uses Tailwind's `dark:` variants and follows the device's light or dark appearance automatically. Coral is a highlight color; keep small text on the background or surface token for readable contrast.
 
 ```js
 // tailwind.config.js (theme excerpt)
@@ -62,15 +62,15 @@ export default {
 - **Notes & photos:** Firebase posts, media, reactions, comments, and sharing controls.
 - **Contact:** direct email CTA and existing GitHub/LinkedIn destinations.
 - **Auth:** Firebase email/password login and registration.
-- **Admin studio:** retained publishing tools with the same light/dark preference.
+- **Admin studio:** retained publishing tools with automatic device theme matching.
 
 ## Accessibility and responsive review
 
 - Every page has a semantic main landmark, a skip link, a single page-level heading, labeled form controls, visible keyboard focus, and navigation state through `aria-current`.
-- The mobile navigation exposes `aria-expanded` and an accessible label. Theme toggle labels announce the destination theme. Social links use accessible names; decorative icon SVGs are hidden from assistive technology.
+- The mobile navigation exposes `aria-expanded` and an accessible label. Social links use accessible names; decorative icon SVGs are hidden from assistive technology.
 - Reduced-motion preferences disable CSS motion and render the Three.js scene as a static frame. The Earth texture remains as a static fallback if WebGL is unavailable.
 - Content grids collapse at narrow widths; headings use `clamp`, cards wrap, URLs can break, and navigation and icon controls meet 44px touch-target sizing. The site uses a centered `max-w-7xl` content grid and consistent horizontal padding.
-- Preserve a 4.5:1 contrast target for body text. Accent color is not used alone to convey state. Test the finished UI at 375, 768, 1024, and 1440 px, with keyboard-only navigation, 200% zoom, and both theme settings before launch.
+- Preserve a 4.5:1 contrast target for body text. Accent color is not used alone to convey state. Review the finished UI at 375, 768, 1024, and 1440 px, with keyboard-only navigation, 200% zoom, and both device appearance preferences before launch.
 
 ## Build and deployment
 

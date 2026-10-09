@@ -26,13 +26,13 @@ Create a production build with `npm run build`; preview it with `npm run preview
 
 ## Content
 
-Edit project and service data in `js/script.js`. The publishing studio at `/admin.html` manages posts in Firestore; public posts render in `posts.html` and project posts also appear under Projects.
+Edit project and service data in `js/script.js`. The publishing studio at `/admin.html` manages posts in Firestore; public posts render in `posts.html` and project posts also appear under Projects. The studio supports direct image selection from a phone or computer and stores images in Firebase Storage.
 
-The Firebase web configuration is in `js/firebase-config.js`. Firebase web config values are public; protect write access with the rules in `firestore.rules`. Enable Email/Password and Anonymous providers in Firebase Authentication for registration/login and public reactions respectively.
+The Firebase web configuration is in `js/firebase-config.js`. Firebase web config values are public; protect write access with `firestore.rules` and `storage.rules`. Enable Email/Password and Anonymous providers in Firebase Authentication for registration/login and public reactions respectively. To enable photo uploads, create the project's Cloud Storage bucket in the Firebase console and publish the rules from `storage.rules`. Cloud Storage currently requires the Firebase project to use the Blaze pay-as-you-go plan; review its pricing and set a budget alert before enabling it. Uploads are limited to image files up to 12 MiB and the existing admin UID.
 
 ## Theme and tokens
 
-The theme toggle persists between pages. Light and dark hex tokens and responsive/accessibility guidance are documented in [`DESIGN_SYSTEM.md`](DESIGN_SYSTEM.md) and `tailwind.config.js`.
+The site follows the device's light or dark appearance automatically and updates when the device theme changes. Light and dark hex tokens and responsive/accessibility guidance are documented in [`DESIGN_SYSTEM.md`](DESIGN_SYSTEM.md) and `tailwind.config.js`.
 
 ## UI/UX Pro Max skill
 

@@ -15,11 +15,11 @@
 }
 
 @layer components {
-  .brand-orbit { position: relative; display: inline-block; width: 29px; height: 16px; }
-  .brand-orbit i { position: absolute; top: 2px; width: 12px; height: 12px; border: 1.7px solid currentColor; border-radius: 9999px; }
+  .brand-orbit { position: relative; display: inline-block; flex: 0 0 38px; width: 38px; height: 22px; }
+  .brand-orbit i { position: absolute; top: 2px; width: 17px; height: 17px; border: 2px solid currentColor; border-radius: 9999px; }
   .brand-orbit i:nth-child(1) { left: 0; color: #25d69a; }
-  .brand-orbit i:nth-child(2) { left: 8px; color: #ffbc42; }
-  .brand-orbit i:nth-child(3) { left: 16px; color: #ff687e; }
+  .brand-orbit i:nth-child(2) { left: 10px; color: #ffbc42; }
+  .brand-orbit i:nth-child(3) { left: 20px; color: #ff687e; }
   .home-hero::before { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: radial-gradient(ellipse at 76% 42%, rgba(27,189,219,.12), transparent 32%), radial-gradient(ellipse at 12% 20%, rgba(139,92,246,.12), transparent 34%); }
   .home-hero::after { content: ''; position: absolute; z-index: -1; left: 50%; bottom: 0; width: 100vw; height: 32%; transform: translateX(-50%); pointer-events: none; opacity: .94; clip-path: polygon(0 40%, 10% 54%, 22% 72%, 34% 77%, 47% 65%, 58% 44%, 70% 37%, 82% 20%, 93% 4%, 100% 0, 100% 100%, 0 100%); background: linear-gradient(112deg, #ec5c84 0%, #ff816e 28%, #f9a34b 55%, #ff744f 78%, #e95778 100%); }
   .skip-link { @apply fixed left-4 top-4 z-[100] -translate-y-24 rounded-full bg-light-text px-5 py-3 font-semibold text-white shadow-lg transition-transform focus:translate-y-0 dark:bg-dark-primary dark:text-dark-background; }

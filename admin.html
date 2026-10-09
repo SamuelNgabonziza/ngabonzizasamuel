@@ -10,15 +10,14 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
-<script>try{const t=localStorage.getItem('flowshield-theme-v2');if(t!=='light')document.documentElement.classList.add('dark')}catch{}</script>
+<script>try{const dark=window.matchMedia('(prefers-color-scheme: dark)').matches;document.documentElement.classList.toggle('dark',dark);document.querySelector('meta[name=theme-color]')?.setAttribute('content',dark?'#111018':'#f7f6fb')}catch{}</script>
 </head>
 <body class="studio-page">
 <main class="studio-wrap">
-  <button type="button" id="theme-toggle" class="studio-theme-floating" aria-label="Switch to dark theme">Use dark theme</button>
   <header class="studio-header"><a class="brand" href="index.html"><span class="brand-mark">F</span> FlowShield</a><a href="index.html">View website ↗</a></header>
   <section class="studio-intro"><p class="studio-eyebrow">FlowShield content studio</p><h1>Make something.<br><span>Put it out there.</span></h1><p>Publish a project update, photo, short video, or article. Your Firebase posts appear on the website for every visitor.</p></section>
   <div class="studio-notice"><strong>Firebase publishing</strong><span>Posts are shared through Firestore. Photos and videos use public URLs; no Firebase Storage bucket is needed.</span></div>
-  <section id="sign-in-panel" class="studio-sign-in"><p class="studio-eyebrow">ADMIN ACCESS</p><h2>Sign in to publish</h2><form id="sign-in-form"><label>Email<input type="email" name="email" required autocomplete="username"></label><label>Password<input type="password" name="password" required autocomplete="current-password"></label><button class="studio-submit" type="submit">Sign in</button></form><p id="auth-status" class="form-status" aria-live="polite">Add your Firebase web configuration to js/firebase-config.js to connect this panel.</p></section>
+  <section id="sign-in-panel" class="studio-sign-in"><p class="studio-eyebrow">ADMIN ACCESS</p><h2>Sign in to publish</h2><form id="sign-in-form"><label>Email<input type="email" name="email" required autocomplete="username"></label><label>Password<input type="password" name="password" required autocomplete="current-password"></label><button class="studio-submit" type="submit">Sign in</button></form><p id="auth-status" class="form-status" aria-live="polite">Add your Firebase web configuration to js/firebase-config.js to connect this panel.</p><button id="sign-out-unapproved" class="studio-export" type="button" hidden>Sign out</button></section>
   <div id="studio-content" class="studio-layout" hidden>
     <section class="studio-form-panel">
       <p class="studio-eyebrow">NEW POST</p><h2>What are you sharing?</h2>
@@ -26,7 +25,17 @@
         <label>Post type<select name="type" id="post-type"><option value="project">Project</option><option value="photo">Photo</option><option value="video">Video</option><option value="article">Article</option></select></label>
         <label>Title<input name="title" required maxlength="100" placeholder="Give it a clear title"></label>
         <label>Post content<textarea name="description" required maxlength="10000" rows="8" placeholder="What should people know?"></textarea></label>
-        <label class="image-field"><span id="media-url-label">Public image URL (optional)</span><input name="image" type="url" placeholder="https://your-site.com/images/photo.jpg"></label>
+        <div class="image-field" id="image-field">
+          <div id="image-upload-control" class="image-upload-control">
+            <label for="image-file">Choose a photo from your device <span>(phone gallery or camera)</span></label>
+            <input id="image-file" name="imageFile" type="file" accept="image/*" aria-describedby="image-upload-help image-upload-status">
+            <p id="image-upload-help" class="field-help">Choose a photo here. JPG, PNG, WebP, GIF, AVIF, or HEIC; up to 12 MB.</p>
+            <img id="image-preview" class="image-upload-preview" alt="Selected photo preview" hidden>
+            <p id="image-upload-status" class="form-status" aria-live="polite"></p>
+          </div>
+          <label for="image-url"><span id="media-url-label">Or paste a public image URL (optional)</span></label>
+          <input id="image-url" name="image" type="url" placeholder="https://…" inputmode="url" autocomplete="url">
+        </div>
         <label class="link-field">Project or reference link <span>(optional)</span><input name="link" type="url" placeholder="https://…"></label>
         <fieldset class="post-permissions"><legend>Post settings</legend><label><input type="checkbox" name="published" checked> Show this post on the website</label><label><input type="checkbox" name="allowLikes"> Allow likes</label><label><input type="checkbox" name="allowComments"> Allow comments</label><label><input type="checkbox" name="allowShare"> Show a share button</label></fieldset>
         <div class="studio-form-actions"><button id="save-post" class="studio-submit" type="submit">Publish post <span>↗</span></button><button id="cancel-edit" class="studio-export" type="button" hidden>Cancel edit</button></div><p id="form-status" class="form-status" aria-live="polite"></p>
