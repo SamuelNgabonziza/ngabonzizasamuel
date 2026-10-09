@@ -288,3 +288,23 @@ html.dark .cloud-project .content p{color:#beb7c9}
 @media(max-width:760px){.home-page .hero-art{height:420px}}
 @media(max-width:420px){.home-page .hero-art{height:340px}}
 @media(prefers-reduced-motion:reduce){.home-page .art-glow{animation:none}}
+
+
+/* Continuous full-page backgrounds for roadmap and studio, from the uploaded references. */
+html,body { min-height:100%; }
+body { position:relative; isolation:isolate; background:transparent !important; }
+body::before { content:''; position:fixed; inset:-14px; z-index:-2; pointer-events:none; background-position:center; background-size:cover; background-repeat:no-repeat; filter:saturate(1.18) brightness(1.10); transform:scale(1.01); background-image:url('../images/reference-stats-clean.png'); }
+body::after { content:''; position:fixed; inset:0; z-index:-1; pointer-events:none; background:linear-gradient(140deg,rgba(249,246,244,.55),rgba(239,244,247,.51) 55%,rgba(249,241,245,.57)); }
+.studio-page::before { background-image:url('../images/reference-gallery-clean.png'); }
+.studio-page::after { background:linear-gradient(140deg,rgba(17,22,27,.50),rgba(19,26,31,.48) 55%,rgba(27,20,30,.53)); }
+nav { background:transparent; backdrop-filter:none; border-radius:0; padding-inline:0; }
+.stage { background:rgba(255,255,255,.24) !important; backdrop-filter:blur(14px); border-color:rgba(255,255,255,.58) !important; box-shadow:0 24px 80px rgba(44,44,65,.10); }
+.studio-page .stage { background:rgba(18,31,32,.32) !important; border-color:rgba(255,255,255,.16) !important; }
+
+/* Bright liquid-glass button response. */
+@keyframes liquid-glint-legacy { from { background-position:150% 0; } to { background-position:-50% 0; } }
+.btn, .home-button, .interaction-button, button, a[class*="cta"], a[class*="button"] { transition:transform .28s cubic-bezier(.2,.8,.2,1),box-shadow .28s ease,border-color .28s ease,background-color .28s ease,backdrop-filter .28s ease; }
+.btn:hover, .home-button:hover, .interaction-button:hover, button:hover:not(:disabled), a[class*="cta"]:hover, a[class*="button"]:hover { opacity:1; transform:translateY(-2px); background-color:rgba(255,255,255,.28); background-image:linear-gradient(110deg,transparent 24%,rgba(255,255,255,.62) 48%,transparent 70%); background-size:220% 100%; animation:liquid-glint-legacy .85s ease-out; backdrop-filter:blur(16px) saturate(185%); -webkit-backdrop-filter:blur(16px) saturate(185%); border-color:rgba(255,255,255,.85); box-shadow:0 10px 28px rgba(55,107,145,.2),inset 0 1px 1px rgba(255,255,255,.82),inset 0 -1px 1px rgba(255,255,255,.26); }
+.btn:active, .home-button:active, button:active { transform:scale(.98); }
+@media(prefers-reduced-motion:reduce) { .btn:hover, .home-button:hover, button:hover { animation:none; } }
+

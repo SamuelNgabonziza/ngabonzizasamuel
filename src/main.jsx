@@ -99,8 +99,8 @@ function HomePage() {
         </div>
         <div className="mt-9 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-light-muted dark:text-dark-muted"><span>Curious by nature.</span><Sparkles aria-hidden="true" size={16} className="text-light-accent dark:text-dark-accent" /><span>Building with purpose.</span></div>
       </div>
-      <div ref={frameRef} className="hero-art relative mx-auto aspect-square w-full max-w-[610px] overflow-visible" aria-label="Rotating satellite-textured Earth with three colorful 3D rings" role="group">
-        <img className="earth-fallback absolute left-1/2 top-1/2 z-0 w-[38%] -translate-x-1/2 -translate-y-1/2 rounded-full" src="images/earth-blue-marble.jpg" alt="" aria-hidden="true" />
+      <div ref={frameRef} className="hero-art relative mx-auto aspect-square w-full max-w-[610px] overflow-visible" aria-label="Slowly rotating NASA Blue Marble Earth with all continents and three luminous, rotating rings" role="group">
+        <img className="earth-fallback absolute left-1/2 top-1/2 z-0 w-[38%] -translate-x-1/2 -translate-y-1/2 rounded-full" src="images/world-globe.png" alt="" aria-hidden="true" />
         <canvas ref={canvasRef} className="absolute inset-0 z-[1] size-full" aria-hidden="true" />
         <span className="pointer-events-none absolute bottom-[8%] right-[7%] z-10 font-display text-2xl italic text-light-primary/70 dark:text-dark-primary/70">Ideas in motion</span>
       </div>

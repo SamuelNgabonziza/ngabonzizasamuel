@@ -21,27 +21,30 @@ export function initHeroEarth(canvas, frame) {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.18;
+    renderer.toneMappingExposure = 1.34;
 
-    scene.add(new THREE.AmbientLight(0xffffff, 1.05));
-    const keyLight = new THREE.DirectionalLight(0xffffff, 3.2);
+    scene.add(new THREE.AmbientLight(0xffffff, 1.55));
+    scene.add(new THREE.HemisphereLight(0xd9f3ff, 0x74516f, 1.05));
+    const keyLight = new THREE.DirectionalLight(0xffffff, 4.1);
     keyLight.position.set(-3.5, 3.2, 5);
     scene.add(keyLight);
-    const rimLight = new THREE.PointLight(0xc7e4ff, 13, 12);
+    const rimLight = new THREE.PointLight(0xc7e4ff, 15, 12);
     rimLight.position.set(3.4, 0.2, -3.2);
     scene.add(rimLight);
-    const colorLight = new THREE.PointLight(0xff5ca8, 5, 10);
+    const colorLight = new THREE.PointLight(0xff5ca8, 4.5, 10);
     colorLight.position.set(-3, -2.5, 2.5);
     scene.add(colorLight);
 
     const earth = new THREE.Group();
-    earth.rotation.y = Math.PI * 0.93;
+    earth.rotation.y = 0.08;
     scene.add(earth);
 
     const earthMaterial = new THREE.MeshPhongMaterial({
       color: 0xffffff,
-      specular: new THREE.Color(0x7fa6c9),
-      shininess: 14
+      specular: new THREE.Color(0xe6f7ff),
+      shininess: 34,
+      emissive: new THREE.Color(0xffffff),
+      emissiveIntensity: 0.26
     });
     const globe = new THREE.Mesh(new THREE.SphereGeometry(1.19, 96, 64), earthMaterial);
     earth.add(globe);
@@ -49,9 +52,9 @@ export function initHeroEarth(canvas, frame) {
     const atmosphere = new THREE.Mesh(
       new THREE.SphereGeometry(1.235, 80, 56),
       new THREE.MeshBasicMaterial({
-        color: 0x52baff,
+        color: 0x73dcff,
         transparent: true,
-        opacity: 0.16,
+        opacity: 0.17,
         side: THREE.BackSide,
         blending: THREE.AdditiveBlending,
         depthWrite: false
@@ -60,17 +63,21 @@ export function initHeroEarth(canvas, frame) {
     earth.add(atmosphere);
 
     new THREE.TextureLoader().load(
-      new URL('../images/earth-blue-marble.jpg', import.meta.url).href,
+      new URL('../images/nasa-blue-marble-color.jpg', import.meta.url).href,
       texture => {
         if (disposed) { texture.dispose(); return; }
         texture.colorSpace = THREE.SRGBColorSpace;
         texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+        texture.minFilter = THREE.LinearMipmapLinearFilter;
+        texture.magFilter = THREE.LinearFilter;
         earthMaterial.map = texture;
+        earthMaterial.emissiveMap = texture;
+        earthMaterial.emissiveIntensity = 0.3;
         earthMaterial.needsUpdate = true;
         frame.classList.add('earth-ready');
       },
       undefined,
-      error => console.error('Could not load the NASA Earth texture.', error)
+      error => console.error('Could not load the NASA Blue Marble Earth texture.', error)
     );
 
     const orbitSystem = new THREE.Group();
@@ -96,9 +103,9 @@ export function initHeroEarth(canvas, frame) {
     flareTexture.colorSpace = THREE.SRGBColorSpace;
 
     const ringSpecs = [
-      { inner: 1.30, outer: 1.52, color: 0xa855f7, glow: 0x52209b, tilt: [-0.82, 0.13, -0.24], speed: 2.2 },
-      { inner: 1.55, outer: 1.77, color: 0x22d3ee, glow: 0x087f9d, tilt: [0.72, -0.28, 0.52], speed: -1.75 },
-      { inner: 1.80, outer: 2.00, color: 0xfb7185, glow: 0xa52b53, tilt: [1.2, 0.42, 0.88], speed: 2.55 }
+      { inner: 1.30, outer: 1.52, color: 0xd96bff, glow: 0x9d35ff, tilt: [-0.82, 0.13, -0.24], speed: 2.2 },
+      { inner: 1.55, outer: 1.77, color: 0x49f4ff, glow: 0x09bfe8, tilt: [0.72, -0.28, 0.52], speed: -1.75 },
+      { inner: 1.80, outer: 2.00, color: 0xff8299, glow: 0xe83f72, tilt: [1.2, 0.42, 0.88], speed: 2.55 }
     ];
 
     const sparkles = [];
@@ -129,21 +136,32 @@ export function initHeroEarth(canvas, frame) {
         steps: 1
       });
       bandGeometry.translate(0, 0, -bandDepth / 2);
-      const ringMaterial = new THREE.MeshPhongMaterial({
+      const ringMaterial = new THREE.MeshPhysicalMaterial({
         color,
-        specular: 0xffffff,
-        shininess: 220,
+        metalness: 0.14,
+        roughness: 0.13,
+        clearcoat: 1,
+        clearcoatRoughness: 0.045,
+        iridescence: 0.72,
+        iridescenceIOR: 1.42,
+        iridescenceThicknessRange: [220, 560],
+        sheen: 0.48,
+        sheenColor: new THREE.Color(color),
         emissive: glow,
-        emissiveIntensity: 0.16
+        emissiveIntensity: 0.62
       });
       const ring = new THREE.Mesh(bandGeometry, ringMaterial);
       spin.add(ring);
 
-      const polishedEdge = new THREE.MeshPhongMaterial({ color: 0xf3e9ff, specular: 0xffffff, shininess: 250 });
+      const polishedEdge = new THREE.MeshPhysicalMaterial({ color: 0xffffff, metalness: 0.18, roughness: 0.055, clearcoat: 1, clearcoatRoughness: 0.025, emissive: color, emissiveIntensity: 0.24 });
+      const haloEdge = new THREE.MeshBasicMaterial({ color, transparent: true, opacity: 0.38, blending: THREE.AdditiveBlending, depthWrite: false });
       [inner, outer].forEach(edgeRadius => {
         const edge = new THREE.Mesh(new THREE.TorusGeometry(edgeRadius, 0.012, 10, 320), polishedEdge);
-        edge.position.z = bandDepth * 0.54;
+        edge.position.z = bandDepth * 0.56;
         spin.add(edge);
+        const halo = new THREE.Mesh(new THREE.TorusGeometry(edgeRadius, 0.035, 8, 320), haloEdge);
+        halo.position.z = bandDepth * 0.46;
+        spin.add(halo);
       });
 
       for (let i = 0; i < 2; i += 1) {
@@ -201,7 +219,7 @@ export function initHeroEarth(canvas, frame) {
     const draw = () => {
       const delta = Math.min(clock.getDelta(), 0.04);
       if (!reducedMotion && !document.hidden) {
-        earth.rotation.y += delta * 0.12;
+        earth.rotation.y += delta * 0.22;
         ringGroups.forEach(({ spin, orientation }) => {
           spin.rotation.z += delta * spin.userData.speed;
           orientation.rotation.y += delta * orientation.userData.precession;
