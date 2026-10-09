@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import {
-  ArrowRight, ArrowUpRight, Camera, Globe,
-  Menu, Music2, Sparkles, X
+  ArrowRight, ArrowUpRight, Camera, Linkedin, Menu, MessageCircle,
+  Phone, Sparkles, X
 } from 'lucide-react';
 import { projects, services } from '../js/script.js';
 import './app.css';
@@ -49,10 +49,14 @@ function Header({ page }) {
   </header>;
 }
 
+const phoneNumber = '+256787284024';
+const whatsappLink = `https://wa.me/256787284024?text=${encodeURIComponent('Hello Samuel, I found your website and would like to connect.')}`;
+const linkedInLink = 'https://www.linkedin.com/in/ngabonziza-samuel-7755a937b';
 const socials = [
-  { label: 'Instagram', href: 'https://www.instagram.com/', Icon: Camera },
-  { label: 'FlowShield home', href: 'index.html', Icon: Globe },
-  { label: 'TikTok', href: 'https://www.tiktok.com/', Icon: Music2 },
+  { label: 'Instagram @strictly_sam_ngabonziza', href: 'https://www.instagram.com/strictly_sam_ngabonziza/', Icon: Camera },
+  { label: 'LinkedIn', href: linkedInLink, Icon: Linkedin },
+  { label: 'WhatsApp Samuel', href: whatsappLink, Icon: MessageCircle, color: 'text-[#20a765] dark:text-[#42d17d]' },
+  { label: 'Call Samuel', href: `tel:${phoneNumber}`, Icon: Phone, color: 'text-light-primary dark:text-dark-primary' },
 ];
 
 function Footer() {
@@ -62,7 +66,7 @@ function Footer() {
       <div className="flex flex-wrap gap-x-5 gap-y-3 text-sm text-light-muted dark:text-dark-muted"><a className="hover:text-light-primary dark:hover:text-dark-primary" href="projects.html">Work</a><a className="hover:text-light-primary dark:hover:text-dark-primary" href="posts.html">Ideas</a><a className="hover:text-light-primary dark:hover:text-dark-primary" href="contact.html">Contact</a><a className="hover:text-light-primary dark:hover:text-dark-primary" href="admin.html">Studio</a></div>
     </div>
     <nav className="relative z-10 flex justify-center gap-4 pb-12" aria-label="Social and site links">
-      {socials.map(({ label, href, Icon }) => <a key={label} href={href} aria-label={label} title={label} target={href.startsWith('http') ? '_blank' : undefined} rel={href.startsWith('http') ? 'noopener noreferrer' : undefined} className="group grid size-12 place-items-center rounded-full border border-white/60 bg-white/65 p-4 text-light-text shadow-sm backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:border-light-primary/40 hover:bg-light-secondary hover:text-light-primary hover:shadow-glass focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-light-primary dark:border-white/10 dark:bg-white/5 dark:text-dark-text dark:hover:border-dark-primary/50 dark:hover:bg-dark-secondary dark:hover:text-dark-primary dark:focus-visible:outline-dark-primary"><Icon aria-hidden="true" size={19} strokeWidth={1.7} /></a>)}
+      {socials.map(({ label, href, Icon, color }) => <a key={label} href={href} aria-label={label} title={label} target={href.startsWith('http') ? '_blank' : undefined} rel={href.startsWith('http') ? 'noopener noreferrer' : undefined} className={`group grid size-12 place-items-center rounded-full border border-white/60 bg-white/65 p-4 shadow-sm backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:border-light-primary/40 hover:bg-light-secondary hover:shadow-glass focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-light-primary dark:border-white/10 dark:bg-white/5 dark:hover:border-dark-primary/50 dark:hover:bg-dark-secondary dark:focus-visible:outline-dark-primary ${color || 'text-light-text dark:text-dark-text hover:text-light-primary dark:hover:text-dark-primary'}`}><Icon aria-hidden="true" size={19} strokeWidth={1.7} /></a>)}
     </nav>
     <div className="flex flex-col gap-2 border-t border-light-border pt-5 text-xs text-light-muted dark:border-dark-border dark:text-dark-muted sm:flex-row sm:items-center sm:justify-between"><span>Copyright {new Date().getFullYear()} Samuel Ngabonziza</span><span>Soroti University | Computer &amp; Electronics Engineering | Uganda</span></div>
   </footer>;
@@ -162,12 +166,12 @@ function PostsPage() {
 
 function ContactPage() {
   return <><PageHero eyebrow="Start a good conversation" title={<>Have a good<br /><span className="italic text-light-primary dark:text-dark-primary">problem?</span></>} description="Open to internships, collaboration, feedback, and conversations about what FlowShield becomes." />
-    <section className="mx-auto grid max-w-7xl gap-12 px-5 pb-28 sm:px-8 lg:grid-cols-[1fr_.8fr] lg:px-10"><div className="contact-color-panel rounded-[2rem] p-8 text-white sm:p-12"><SectionEyebrow>Tell me what you're thinking</SectionEyebrow><h2 className="font-display text-4xl font-medium leading-tight sm:text-5xl">Every useful thing starts with a question.</h2><p className="mt-5 max-w-lg leading-7 text-white/85">Send a short note. I'll get back to you by email.</p><a href="mailto:ngabonzizasamuelprosper@gmail.com?subject=Lets%20talk" className="mt-8 inline-flex min-h-12 items-center gap-3 rounded-full bg-white px-6 py-3 font-semibold text-light-primary transition hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"><span>Write an email</span><ArrowUpRight size={17} /></a></div>
-      <div className="flex flex-col justify-center gap-6"><ContactLink label="Email" value="ngabonzizasamuelprosper@gmail.com" href="mailto:ngabonzizasamuelprosper@gmail.com" /><ContactLink label="GitHub" value="SamuelNgabonziza" href="https://github.com/SamuelNgabonziza" /><ContactLink label="LinkedIn" value="Ngabonziza Samuel" href="https://www.linkedin.com/in/ngabonziza-samuel-7755a937b" /></div>
+    <section className="mx-auto grid max-w-7xl gap-12 px-5 pb-28 sm:px-8 lg:grid-cols-[1fr_.8fr] lg:px-10"><div className="contact-color-panel rounded-[2rem] p-8 text-white sm:p-12"><SectionEyebrow>Tell me what you're thinking</SectionEyebrow><h2 className="font-display text-4xl font-medium leading-tight sm:text-5xl">Every useful thing starts with a question.</h2><p className="mt-5 max-w-lg leading-7 text-white/85">Send a short note. I'll get back to you.</p><div className="mt-8 flex flex-wrap gap-3"><a href="mailto:ngabonzizasamuelprosper@gmail.com?subject=Lets%20talk" className="inline-flex min-h-12 items-center gap-3 rounded-full bg-white px-6 py-3 font-semibold text-light-primary transition hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"><span>Write an email</span><ArrowUpRight size={17} /></a><a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-12 items-center gap-3 rounded-full border border-white/45 bg-white/15 px-6 py-3 font-semibold text-white backdrop-blur-sm transition hover:-translate-y-0.5 hover:bg-white/25 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"><MessageCircle size={18} aria-hidden="true" /><span>Message on WhatsApp</span></a></div></div>
+      <div className="flex flex-col justify-center gap-6"><ContactLink label="Phone" value="+256 787 284 024 · 0787 284 024" href={`tel:${phoneNumber}`} Icon={Phone} /><ContactLink label="WhatsApp" value="Message me directly" href={whatsappLink} Icon={MessageCircle} iconColor="text-[#20a765] dark:text-[#42d17d]" /><ContactLink label="Email" value="ngabonzizasamuelprosper@gmail.com" href="mailto:ngabonzizasamuelprosper@gmail.com" /><ContactLink label="GitHub" value="SamuelNgabonziza" href="https://github.com/SamuelNgabonziza" /><ContactLink label="LinkedIn" value="Ngabonziza Samuel" href={linkedInLink} Icon={Linkedin} /></div>
     </section></>;
 }
 
-function ContactLink({ label, value, href }) { return <a href={href} target={href.startsWith('http') ? '_blank' : undefined} rel={href.startsWith('http') ? 'noopener noreferrer' : undefined} className="group flex items-center justify-between gap-5 border-b border-light-border py-4 transition hover:border-light-primary dark:border-dark-border dark:hover:border-dark-primary"><span><span className="block text-xs font-semibold uppercase tracking-[.15em] text-light-muted dark:text-dark-muted">{label}</span><span className="mt-1 block break-all font-medium">{value}</span></span><ArrowUpRight className="shrink-0 text-light-primary transition group-hover:-translate-y-1 group-hover:translate-x-1 dark:text-dark-primary" size={18} /></a>; }
+function ContactLink({ label, value, href, Icon, iconColor = 'text-light-primary dark:text-dark-primary' }) { return <a href={href} target={href.startsWith('http') ? '_blank' : undefined} rel={href.startsWith('http') ? 'noopener noreferrer' : undefined} className="group flex items-center justify-between gap-4 border-b border-light-border py-4 transition hover:border-light-primary dark:border-dark-border dark:hover:border-dark-primary"><span className="flex min-w-0 items-center gap-3">{Icon && <span className={`grid size-10 shrink-0 place-items-center rounded-full bg-light-secondary dark:bg-dark-secondary ${iconColor}`}><Icon aria-hidden="true" size={18} /></span>}<span className="min-w-0"><span className="block text-xs font-semibold uppercase tracking-[.15em] text-light-muted dark:text-dark-muted">{label}</span><span className="mt-1 block break-all font-medium">{value}</span></span></span><ArrowUpRight className="shrink-0 text-light-primary transition group-hover:-translate-y-1 group-hover:translate-x-1 dark:text-dark-primary" size={18} /></a>; }
 
 function AuthPage() {
   useEffect(() => { import('../js/auth.js').then(({ initAuth }) => initAuth()); }, []);
